@@ -30,7 +30,11 @@ public class LoginServlet extends HttpServlet {
 		DatabaseManager mgr=new DatabaseManager();
 		boolean isValid = mgr.isValidUser(username,password);
 		
-		if(username.equals("majrul")&& password.equals("123")) {
+		/*
+		 * This was the v1 where the validation was done using harcoded values
+		 * if(username.equals("majrul")&& password.equals("123")) {
+		 * 
+		 */
 			String rememberMe = request.getParameter("rememberMe");
 			if(rememberMe != null && rememberMe.equals("yes")) {
 					
@@ -54,7 +58,7 @@ public class LoginServlet extends HttpServlet {
 					c2.setMaxAge(60*60);				//1hr 
 					response.addCookie(c1);
 					response.addCookie(c2);
-			}
+			/* } */
 			response.sendRedirect("welcome.html");	
 		}
 		else
