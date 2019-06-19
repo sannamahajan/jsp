@@ -5,12 +5,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DatabaseManager {
 	
-	String user = "system";
-	String pass = "admin";
+	String user = "hr";
+	String pass = "hr";
 	
 	public boolean isValidUser (String username, String password) {
 		Connection connection = null;
@@ -26,7 +28,7 @@ public class DatabaseManager {
 			 * insert into table_user_login values ('Saurav','password','true');
 			 * insert into table_user_login values ('Shreyansh','password','false');
 			 * insert into table_user_login values ('Sriya','password','true');
-			 * Use the above queires to populate the table.
+			 * Use the above queries to populate the table.
 			 */
 			String query = "select count(*) from table_user_login where name = ? and password = ? and active ='true'";
 			statement = connection.prepareStatement(query);
@@ -84,7 +86,39 @@ public class DatabaseManager {
 		}
 	}
 	
-	public void dispAll() {
+public List<UserRegistration> fetchAll() {
 		
-	}
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultset = null ;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			connection =DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE",user,pass);                                              
+			String query = "select * from table_user";
+			statement = connection.prepareStatement(query);
+			resultset = statement.executeQuery();
+			
+			List<UserRegistration> usernew = new ArrayList<UserRegistration>();
+			while(resultset.next()) {
+				UserRegistration ur = new UserRegistration();
+				ur.setName(resultset.getString(1));
+				ur.setEmail(resultset.getString(2));
+				ur.setCity(resultset.getString(3));
+				ur.setUsername(resultset.getString(4));
+				ur.setPassword(resultset.getString(5));
+				usernew.add(ur);
+			}
+			return usernew;
+		}
+		catch(ClassNotFoundException e) {
+			System.out.println("JDBC driver not found");
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try { connection.close(); } catch(Exception e) { }
+		}
+		return null; // bad 
+		}
 }
