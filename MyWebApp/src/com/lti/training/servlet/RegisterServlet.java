@@ -28,7 +28,9 @@ public class RegisterServlet extends HttpServlet {
 		
 		DatabaseManager dm = new DatabaseManager();
 		dm.registerUser(name, email, city, username, password);
-		
+		/*
+		 * 
+		 */
 		List<UserRegistration> un = new ArrayList<UserRegistration>();
 		un = dm.fetchAll();
 		request.setAttribute("thelist", un);

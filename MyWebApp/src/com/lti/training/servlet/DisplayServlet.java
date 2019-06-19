@@ -17,9 +17,17 @@ import com.lti.training.servlet.RegisterServlet;
 @WebServlet("/DisplayServlet")
 public class DisplayServlet extends HttpServlet {
 
+	@SuppressWarnings("unchecked")
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		PrintWriter out=response.getWriter();
+		/*
+		 * Creating an array list object by the name --> list of type UserRegistration.
+		 * Used to hold the objects of type UserRegistration. request.getAttribute() is
+		 * used to fetch the attribute from the previous servlet where "thelist" is the identifier
+		 * assigning the parameter to the variable list. Iterating through the list and printing it
+		 * using print writer object
+		 */
 		List<UserRegistration> list = new ArrayList<UserRegistration>();
 		list = (List<UserRegistration>) request.getAttribute("thelist");
 		for(UserRegistration users : list ) {
