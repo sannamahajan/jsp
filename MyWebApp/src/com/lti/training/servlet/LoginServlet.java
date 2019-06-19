@@ -15,7 +15,7 @@ import com.lti.training.auth.DatabaseManager;
 import com.lti.training.auth.UserManager;
 
 
-@WebServlet("/login.lti")
+@WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	
 		
