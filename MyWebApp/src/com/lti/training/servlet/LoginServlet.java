@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.lti.training.auth.DatabaseManager;
+import com.lti.training.auth.UserManager;
+
 
 @WebServlet("/login.lti")
 public class LoginServlet extends HttpServlet {
@@ -20,6 +23,12 @@ public class LoginServlet extends HttpServlet {
 	
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		
+		/*UserManager mgr=new UserManager();
+		boolean isValid = mgr.isValid(username,password);*/
+		
+		DatabaseManager mgr=new DatabaseManager();
+		boolean isValid = mgr.isValidUser(username,password);
 		
 		if(username.equals("majrul")&& password.equals("123")) {
 			String rememberMe = request.getParameter("rememberMe");
