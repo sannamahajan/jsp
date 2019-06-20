@@ -7,23 +7,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import com.lti.exception.DataAccessException;
 import com.lti.model.Product;
 
 public class ProductDao {
 
-	public List<Product> fetchProducts (int from, int to){
+	String user = "hr";
+	String pass = "hr";
+	
+	public List<Product> fetchProducts (int from, int to) throws DataAccessException {
 		Connection conn= null;
 		PreparedStatement stmt = null;	
 		ResultSet rs=null ;			
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			String user = "hr";
-			String pass = "hr";
 			conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE",user,pass);                                              
-			String sql = "SELECT T.* FROM ( SELECT T.*,rowNum as rowIndex FROM (SELECT * FROM table_product)T)T WHERE rowIndex > ? AND rowIndex <= ?;";
+			String sql = "SELECT T.* FROM ( SELECT T.* , rowNum as rowIndex FROM (SELECT id, name, price, quantity FROM table_product)T)T WHERE rowIndex > ? AND rowIndex <= ?";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt (1,  10);
-			rs = stmt.executeQuery();      												
+			stmt.setInt (1,  from);
+			stmt.setInt (2,  to);
+			rs = stmt.executeQuery();   
 			List<Product> products = new ArrayList<Product>();
 			while(rs.next()) {
 				Product p=new Product();
@@ -33,18 +36,18 @@ public class ProductDao {
 				p.setQuantity((rs.getInt(4)));
 				products.add(p);
 			}
-			System.out.println("Balidaaan");
 			return products;
 		}
 		catch(ClassNotFoundException e) {
-			System.out.println("JDBC driver not found");
+			throw new DataAccessException("Unable to load the JDBC driver");
 		}
+		
 		catch(SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException("Problem while fetching products from db",e);
+			
 		}
 		finally {
 			try { conn.close(); } catch(Exception e) { }
 		}
-		return null; // bad 
 	}
 }
