@@ -8,18 +8,18 @@
 <title>Insert title here</title>
 </head>
 <body>
+<form method="post" action="CalculateScoreServlet">
 <%
+		int opNo = 0;
 		Question q = (Question) session.getAttribute("currentQs");
 %>
-
 <h3>Q. <%= q.getQuestion() %></h3>
-<ul>
-
 <%
 		for(Option o : q.getOptions()) {
 %>
-<li><%= o.getOption() %><br /></li>
+<input type="radio" name="op" value="<%=  opNo++ %>"/><%= o.getOption() %><br />
 <% } %>
-</ul>
+<input type = "submit" value ="Continue"/>
+</form>
 </body>
 </html>

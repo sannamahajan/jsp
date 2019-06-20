@@ -83,7 +83,7 @@ public class QuestionBankLoader {
 		
 		o2 = new Option();
 		o2.setOption("Java Viral Mechanism");
-		o2.setRightAnswer(true);
+		o2.setRightAnswer(false);
 
 		o3 = new Option();
 		o3.setOption("Juugar vardan mera");

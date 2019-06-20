@@ -22,10 +22,13 @@ public class QuestionLoaderServlet extends HttpServlet {
 		QuestionBankLoader qb1 = new QuestionBankLoader();
 		List<Question> questions = qb1.fetchQuestionsOnJava();
 		
-		Question q = questions.get(questionNo++);
-		request.getSession().setAttribute("currentQs", q);
-		
-		response.sendRedirect("showQuestion.jsp");
+		if(questionNo<questions.size()) {
+			Question q = questions.get(questionNo++);
+			request.getSession().setAttribute("currentQs", q);
+			response.sendRedirect("showQuestion.jsp");
+		}
+		else
+			response.sendRedirect("showScore.jsp");
 	}
 
 }

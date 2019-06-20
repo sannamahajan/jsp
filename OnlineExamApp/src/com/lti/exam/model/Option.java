@@ -1,4 +1,4 @@
-package com.lti.exam.model;
+          package com.lti.exam.model;
 
 public class Option {
 	
