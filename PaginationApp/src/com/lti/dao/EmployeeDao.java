@@ -13,7 +13,7 @@ public class EmployeeDao {
 	String user = "hr";
 	String pass = "hr";
 	
-	public Employee showEmp(int empno) {
+	public Employee fetchEmp(int empno) {
 		
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -23,7 +23,10 @@ public class EmployeeDao {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE",user,pass);
-			String query = "select * from emp where empno=?";
+			/*
+			 * https://livesql.oracle.com/apex/livesql/file/content_O5AEB2HE08PYEPTGCFLZU9YCV.html
+			 */
+			String query = "select * from emp e inner join dept d on e.deptno = d.deptno where e.empno = ?";
 			
 			statement = connection.prepareStatement(query);
 			statement.setInt(1, empno);
@@ -38,6 +41,8 @@ public class EmployeeDao {
 			employee.setSal(result.getDouble(6));
 			employee.setComm(result.getDouble(7));
 			employee.setDeptno(result.getInt(8));
+			employee.setDname(result.getString(10));
+			employee.setLoc(result.getString(11));
 			
 			return employee;
 			

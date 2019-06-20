@@ -19,6 +19,8 @@ Hire Date : <%= emp.getHiredate() %><br/>
 Salary : <%= emp.getSal() %><br/>
 Commission : <%= emp.getComm() %><br/>
 Department Number : <%= emp.getDeptno() %><br/>
+Department Name : <%= emp.getDname() %><br/>
+Location : <%= emp.getLoc() %><br/>
 
 </body>
 </html>

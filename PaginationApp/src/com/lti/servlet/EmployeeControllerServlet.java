@@ -24,7 +24,7 @@ public class EmployeeControllerServlet extends HttpServlet {
 		
 		EmployeeDao edao = new EmployeeDao();
 		
-		Employee employee = edao.showEmp(empno);
+		Employee employee = edao.fetchEmp(empno);
 		
 		HttpSession session =request.getSession();
 		session.setAttribute("employee", employee);
