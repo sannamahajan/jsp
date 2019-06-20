@@ -28,7 +28,7 @@ public class EmployeeControllerServlet extends HttpServlet {
 		
 		HttpSession session =request.getSession();
 		session.setAttribute("employee", employee);
-		response.sendRedirect("showEmployee.jsp");
+		response.sendRedirect("showEmployee.jsp"); 
 		
 	}
 
