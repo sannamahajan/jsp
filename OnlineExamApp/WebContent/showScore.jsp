@@ -9,5 +9,10 @@
 <body>
 <% int score = (Integer)  session.getAttribute("score"); %>
 <%= score %>
+
+<!-- Manually destroying the session -->
+<% session.invalidate(); %>
+<!-- Manually destroying the session -->
+
 </body>
 </html>

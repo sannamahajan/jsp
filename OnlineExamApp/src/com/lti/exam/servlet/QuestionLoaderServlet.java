@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.lti.exam.model.Question;
 import com.lti.exam.model.QuestionBankLoader;
@@ -22,6 +23,17 @@ public class QuestionLoaderServlet extends HttpServlet {
 		QuestionBankLoader qb1 = new QuestionBankLoader();
 		List<Question> questions = qb1.fetchQuestionsOnJava();
 		
+		HttpSession session = request.getSession();
+		/*
+		 * session.setMaxInactiveInterval(10);
+		 * Activate this part of the code to make sure the session times out after 10 seconds of inactivity.
+		 */
+		
+		Integer questionNo = (Integer) session.getAttribute("questionNo");
+		
+		if(questionNo == null)
+			questionNo = 0;
+		
 		if(questionNo<questions.size()) {
 			Question q = questions.get(questionNo++);
 			request.getSession().setAttribute("currentQs", q);
@@ -29,6 +41,7 @@ public class QuestionLoaderServlet extends HttpServlet {
 		}
 		else
 			response.sendRedirect("showScore.jsp");
+		session.setAttribute("questionNo", questionNo);
 	}
 
 }
