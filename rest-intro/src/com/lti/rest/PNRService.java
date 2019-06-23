@@ -1,8 +1,10 @@
 package com.lti.rest;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 
 import com.lti.rest.PNR.Status;
 
@@ -16,7 +18,9 @@ public class PNRService {
 	
 	@GET
 	@Path("/status")
-	public PNR getStatus(@QueryParam("pnrNo") int pnrNo) {
+	public PNR getStatus(@QueryParam("pnrNo") int pnrNo, @Context HttpServletResponse response) {
+		
+		response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 		/*
 		 * logic of executing the required method of 
 		 * a DAO/or any other class will be here
